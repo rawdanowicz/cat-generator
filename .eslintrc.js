@@ -13,7 +13,7 @@ module.exports = {
       {
         singleQuote: true,
         trailingComma: 'all',
-        'prettier.arrowParens': 'avoid',
+        arrowParens: 'avoid',
       },
     ],
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
