@@ -1,14 +1,14 @@
 <template>
   <div class="form-wrapper">
     <form class="form" @submit.prevent>
-      <div class="form-block search-block">
-        <label for="search" class="block-title">Text</label>
+      <div class="form-block text-input-block">
+        <label for="text" class="block-title">Text</label>
         <input
-          id="search"
-          class="search-input"
-          @input="submit"
+          id="text"
+          class="text-input"
           type="text"
-          v-model="form.search"
+          autocomplete="off"
+          v-model="form.text"
         />
       </div>
       <div class="form-block color-block">
@@ -20,27 +20,38 @@
               type="radio"
               name="color"
               v-model="form.color"
+              :value="color"
             />
             <label :for="color">{{ color }}</label>
           </div>
         </div>
       </div>
     </form>
+    <div class="message">{{ message }}</div>
+    <CatImage :url="catUrl" />
   </div>
 </template>
 
 <script>
 import { useCatForm } from '@/composables/catForm';
 
+import CatImage from '@/components/CatImage';
+import { watch } from '@vue/runtime-core';
+
 export default {
   name: 'CatsForm',
+  components: { CatImage },
   setup() {
-    const { form, availableColors, submit } = useCatForm();
+    const { form, availableColors, catUrl, message, submit } = useCatForm();
+
+    watch(form, submit);
 
     return {
       form,
-      submit,
       availableColors,
+      catUrl,
+      message,
+      submit,
     };
   },
 };
@@ -50,7 +61,7 @@ export default {
 .form-wrapper {
   width: 95%;
   max-width: 520px;
-  margin: 10% auto;
+  margin: 5% auto;
 }
 
 .header {
@@ -77,7 +88,7 @@ export default {
   margin-bottom: 12px;
 }
 
-.search-block {
+.text-input-block {
   width: 60%;
 }
 
@@ -85,7 +96,7 @@ export default {
   width: 35%;
 }
 
-.search-input {
+.text-input {
   padding: 0 8px;
   height: 28px;
   border-radius: 8px;
@@ -101,5 +112,11 @@ export default {
 
 .color-radio {
   margin-right: 4px;
+}
+
+.message {
+  margin: 40px auto;
+  font-size: 18px;
+  text-align: center;
 }
 </style>
