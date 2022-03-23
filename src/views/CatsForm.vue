@@ -27,20 +27,21 @@
         </div>
       </div>
     </form>
-    <div class="message">{{ message }}</div>
+    <CatFormMessage :message="message" />
     <CatImage :url="catUrl" />
   </div>
 </template>
 
 <script>
-import { useCatForm } from '@/composables/catForm';
+import { watch } from 'vue';
 
+import { useCatForm } from '@/composables/catForm';
+import CatFormMessage from '@/components/CatFormMessage';
 import CatImage from '@/components/CatImage';
-import { watch } from '@vue/runtime-core';
 
 export default {
   name: 'CatsForm',
-  components: { CatImage },
+  components: { CatFormMessage, CatImage },
   setup() {
     const { form, availableColors, catUrl, message, submit } = useCatForm();
 
@@ -112,11 +113,5 @@ export default {
 
 .color-radio {
   margin-right: 4px;
-}
-
-.message {
-  margin: 40px auto;
-  font-size: 18px;
-  text-align: center;
 }
 </style>

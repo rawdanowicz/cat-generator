@@ -9,9 +9,8 @@ export const useCatForm = () => {
   const catUrl = ref('');
   const message = ref('Use form to generate a cat');
 
+  const setCatUrl = url => (catUrl.value = url);
   const setMessage = text => (message.value = text);
-
-  const setCatImage = url => (catUrl.value = url);
 
   const handleFetchCat = debounce(
     () =>
@@ -20,18 +19,18 @@ export const useCatForm = () => {
           if (status !== 200) {
             throw Error('Cat could not be generated');
           }
-          setCatImage(url);
+          setCatUrl(url);
           setMessage('');
         })
         .catch(({ message }) => {
-          setCatImage('');
+          setCatUrl('');
           setMessage(message);
         }),
     1000,
   );
 
   const submit = () => {
-    setCatImage('');
+    setCatUrl('');
     setMessage('Loading...');
     handleFetchCat();
   };
